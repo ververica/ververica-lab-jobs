@@ -1,0 +1,55 @@
+apiVersion: ververica.platform/v1
+kind: VvpDeployment
+metadata:
+  name: argocd-sql-streaming-job
+  namespace: {{ .Values.k8s_namespace }}
+#  annotations:
+#    apikeySecretName: apikey-operator
+spec:
+  syncingMode: PATCH
+  deployment:
+    userMetadata:
+      name: argocd-sql-streaming-job
+      namespace: {{ .Values.vvp_namespace }}
+    spec:
+      state: RUNNING
+      deploymentTargetName: {{ .Values.deployment_target }}
+      restoreStrategy:
+        kind: NONE
+      upgradeStrategy:
+        kind: STATELESS
+      template:
+        spec:
+          artifact:
+            flinkImageRegistry: '{{ .Values.flink_image_registry }}'
+            flinkImageTag: '{{ .Values.flink_image_tag }}'
+            flinkVersion: '{{ .Values.flink_minor }}'
+            kind: SQLSCRIPT
+            sqlScript: |-
+              CREATE TEMPORARY TABLE `vvp`.`default`.`source_table` 
+              (
+                `str` STRING,
+                `num` NUMERIC,
+                `time` TIMESTAMP(3),
+                WATERMARK FOR `time` AS `time` - INTERVAL '1' MINUTE
+              ) WITH (
+                'connector' = 'datagen',
+                'rows-per-second' = '1',
+                'fields.str.length' = '10'
+              );
+
+              CREATE TEMPORARY TABLE `vvp`.`default`.`sink_table` 
+              (
+                `str` STRING,
+                `num` NUMERIC,
+                `time` TIMESTAMP(3)
+              ) WITH (
+                'connector' = 'blackhole'
+              );
+
+              INSERT INTO sink_table
+              SELECT * FROM source_table;
+  initFields:
+    userMetadata:
+      displayName: "ArgoCD: SQL Streaming Job"
+
