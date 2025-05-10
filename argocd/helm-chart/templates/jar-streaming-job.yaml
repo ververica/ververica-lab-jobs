@@ -1,0 +1,32 @@
+apiVersion: ververica.platform/v1
+kind: VvpDeployment
+metadata:
+  name: argocd-jar-streaming-job
+  namespace: {{ .Values.k8s_namespace }}
+#  annotations:
+#    apikeySecretName: apikey-operator
+spec:
+  syncingMode: PATCH
+  deployment:
+    userMetadata:
+      name: argocd-jar-streaming-job
+      namespace: {{ .Values.vvp_namespace }}
+    spec:
+      state: RUNNING
+      deploymentTargetName: {{ .Values.deployment_target }}
+      restoreStrategy:
+        kind: NONE
+      upgradeStrategy:
+        kind: STATELESS
+      template:
+        spec:
+          artifact:
+            flinkImageRegistry: '{{ .Values.flink_image_registry }}'
+            flinkImageTag: '{{ .Values.flink_image_tag }}'
+            flinkVersion: '{{ .Values.flink_minor }}'
+            jarUri: >-
+              https://repo1.maven.org/maven2/org/apache/flink/flink-examples-streaming{{ .Values.scala_suffix }}/{{ .Values.flink_version }}/flink-examples-streaming{{ .Values.scala_suffix }}-{{ .Values.flink_version }}-WindowJoin.jar
+            kind: JAR
+  initFields:
+    userMetadata:
+      displayName: "ArgoCD: Jar Streaming Job"

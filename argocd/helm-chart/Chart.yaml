@@ -1,0 +1,4 @@
+apiVersion: v2
+name: flink-jobs-argocd
+version: 1.0.0
+description: A set of Flink jobs deployed using GitOps iva ArgoCD

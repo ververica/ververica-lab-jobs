@@ -1,0 +1,32 @@
+apiVersion: ververica.platform/v1
+kind: VvpDeployment
+metadata:
+  name: argocd-pyflink-batch-job
+  namespace: {{ .Values.k8s_namespace }}
+#  annotations:
+#    apikeySecretName: apikey-operator
+spec:
+  syncingMode: PATCH
+  deployment:
+    userMetadata:
+      name: argocd-pyflink-batch-job
+      namespace: {{ .Values.vvp_namespace }}
+    spec:
+      state: RUNNING
+      deploymentTargetName: {{ .Values.deployment_target }}
+      restoreStrategy:
+        kind: NONE
+      upgradeStrategy:
+        kind: STATELESS
+      template:
+        spec:
+          artifact:
+            flinkImageRegistry: '{{ .Values.flink_image_registry }}'
+            flinkImageTag: '{{ .Values.flink_image_tag }}'
+            flinkVersion: '{{ .Values.flink_minor }}'
+            kind: PYTHON
+            pythonArtifactUri: >-
+              https://raw.githubusercontent.com/apache/flink/master/flink-python/pyflink/examples/datastream/word_count.py
+  initFields:
+    userMetadata:
+      displayName: "ArgoCD: PyFlink Batch Job"
