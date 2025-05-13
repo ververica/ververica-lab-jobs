@@ -12,7 +12,7 @@ spec:
       name: argocd-pyflink-streaming-job
       namespace: {{ .Values.vvp_namespace }}
     spec:
-      state: RUNNING
+      state: CANCELLED
       deploymentTargetName: {{ .Values.deployment_target }}
       restoreStrategy:
         kind: NONE
