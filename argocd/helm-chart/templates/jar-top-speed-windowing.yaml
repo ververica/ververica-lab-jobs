@@ -3,8 +3,10 @@ kind: VvpDeployment
 metadata:
   name: argocd-top-speed-windowing
   namespace: {{ .Values.k8s_namespace }}
-#  annotations:
-#    apikeySecretName: apikey-operator
+  {{- if .Values.auth_enabled }}
+  annotations:
+    apikeySecretName: apikey-operator
+  {{- end }}
 spec:
   syncingMode: PATCH
   deployment:
@@ -12,7 +14,7 @@ spec:
       name: argocd-top-speed-windowing
       namespace: {{ .Values.vvp_namespace }}
     spec:
-      state: RUNNING
+      state: CANCELLED
       deploymentTargetName: {{ .Values.deployment_target }}
       restoreStrategy:
         kind: NONE

@@ -3,8 +3,10 @@ kind: VvpDeployment
 metadata:
   name: argocd-pyflink-streaming-job
   namespace: {{ .Values.k8s_namespace }}
-#  annotations:
-#    apikeySecretName: apikey-operator
+  {{- if .Values.auth_enabled }}
+  annotations:
+    apikeySecretName: apikey-operator
+  {{- end }}
 spec:
   syncingMode: PATCH
   deployment:
