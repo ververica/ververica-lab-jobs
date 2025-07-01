@@ -23,7 +23,7 @@ spec:
       template:
         spec:
           artifact:
-            flinkImageRegistry: registry.ververica.com/v2.15
+            flinkImageRegistry: registry.ververica.com
             flinkImageTag: 1.19.0-stream3-scala_2.12-java11"
             flinkVersion: "1.19"
             jarUri: >-
