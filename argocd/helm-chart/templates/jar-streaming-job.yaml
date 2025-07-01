@@ -14,7 +14,7 @@ spec:
       name: argocd-jar-streaming-job
       namespace: {{ .Values.vvp_namespace }}
     spec:
-      state: CANCELLED
+      state: RUNNING
       deploymentTargetName: {{ .Values.deployment_target }}
       restoreStrategy:
         kind: NONE
@@ -24,10 +24,10 @@ spec:
         spec:
           artifact:
             flinkImageRegistry: registry.ververica.com/v2.15
-            flinkImageTag: 1.19.0-stream3-scala_2.12-java11
+            flinkImageTag: 1.19.0-stream3-scala_2.12-java11"
             flinkVersion: "1.19"
             jarUri: >-
-              https://repo1.maven.org/maven2/org/apache/flink/flink-examples-streaming_2.12/1.17.2/flink-examples-streaming_2.12-1.17.2-WindowJoin.jar          
+              https://repo1.maven.org/maven2/org/apache/flink/flink-examples-streaming_2.12/1.17.2/flink-examples-streaming_2.12-1.17.2-WindowJoin.jar
             # flinkImageRegistry: '{{ .Values.flink_image_registry }}'
             # flinkImageTag: '{{ .Values.flink_image_tag }}'
             # flinkVersion: '{{ .Values.flink_minor }}'
