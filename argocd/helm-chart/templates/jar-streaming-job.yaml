@@ -24,8 +24,8 @@ spec:
         spec:
           artifact:
             flinkImageRegistry: registry.ververica.com/v2.15
-            flinkImageTag: flink:1.19.0-stream3-scala_2.12-java11
-            flinkVersion: 1.19
+            flinkImageTag: 1.19.0-stream3-scala_2.12-java11
+            flinkVersion: "1.19"
             jarUri: >-
               https://repo1.maven.org/maven2/org/apache/flink/flink-examples-streaming_2.12/1.17.2/flink-examples-streaming_2.12-1.17.2-WindowJoin.jar          
             # flinkImageRegistry: '{{ .Values.flink_image_registry }}'
