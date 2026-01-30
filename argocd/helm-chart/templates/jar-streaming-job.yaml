@@ -27,7 +27,7 @@ spec:
             flinkImageTag: '{{ .Values.flink_image_tag }}'
             flinkVersion: '{{ .Values.flink_minor }}'
             jarUri: >-
-               https://repo1.maven.org/maven2/org/apache/flink/flink-examples-streaming{{ .Values.scala_suffix }}/{{ .Values.flink_version }}/flink-examples-streaming{{ .Values.scala_suffix }}-{{ .Values.flink_version }}-WindowJoin.jar
+              https://repo1.maven.org/maven2/org/apache/flink/flink-examples-streaming{{ .Values.scala_suffix }}/{{ .Values.flink_version }}/flink-examples-streaming{{ .Values.scala_suffix }}-{{ .Values.flink_version }}-WindowJoin.jar
             kind: JAR
   initFields:
     userMetadata:
